@@ -5,7 +5,7 @@ class env1():
     """
     Given a small gridword with size(m, n), do policy evaluation based on 
     Bellman expectation equation. 
-    Undiscounted episodic MDP ()
+    Undiscounted episodic MDP (gamma=1).
     Rules are in the slides of leacture 3.
     Iteration form.
     """
