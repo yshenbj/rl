@@ -1,5 +1,5 @@
 import numpy as np 
-
+import itertools
 
 class env():
     """
@@ -13,6 +13,7 @@ class env():
         self.size = size
         self.terminals = terminals
         self.values = np.zeros(size) 
+        self.s_cnt = np.zeros(size)
 
     def action(self):
         # 0, 1, 2, 3 (w, n, e, s).
@@ -37,10 +38,11 @@ class env():
             elif a == 3:
                 if s[0] < 3: s[0] += 1
             r_ls.append[-1]
-        g_ls = None
-
-
+        g_ls = itertools.accumulate(r_ls)[::-1] 
+        return s_ls, g_ls
 
     def evaluation(self, n_iter):
         for _ in n_iter:
-            pass
+            s_ls, g_ls = self.sampling() 
+             
+            
