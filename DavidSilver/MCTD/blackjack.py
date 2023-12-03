@@ -18,4 +18,6 @@ class BlackJackSingleEnv():
             return
 
     def get_reward(self):
-        pass
+        pass 
+
+    def 
