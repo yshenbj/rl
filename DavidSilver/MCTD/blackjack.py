@@ -3,8 +3,7 @@ import numpy as np
 import random
 
 class BlackJackSingleEnv():
-    def __init__(self, agent):
-        self.agent = agent
+    def __init__(self):
         # action space: (Stick, Twist)
         self.act_space = (0, 1)
         # state space: (Dealer's showing card, Current sum, Number of ace)
@@ -13,16 +12,18 @@ class BlackJackSingleEnv():
         self.decks = [2, 3, 4, 5, 6, 7, 8, 9] * 4 + [10] * 12 + [1] * 4
         random.shuffle(self.decks)
 
-    def palyer_draw(self, card):
+    def draw(self, card, ls):
+        # ls: (Current sum, Number of ace)
         if card > 1: 
-            self.obs_space[1] += card
+            ls[0] += card
         else:
-            self.obs_space[2] += card
+            ls[1] += card
+        return ls
 
 
     def solve_sum(self, ls):
         # ls: (Current sum, Number of ace)
-        x = sum(ls[0]) 
+        x = ls[0]
         for _ in range(ls[1]):
             if x + 11 > 21:
                 x += 1
@@ -30,27 +31,68 @@ class BlackJackSingleEnv():
                 x += 11
         return x
 
-
     def solve_stick(self):
-        # dealer_sum = 
-        pass
+        dealer_ls = [0, 0]
+        dealer_ls = self.draw(self.obs_space[0], dealer_ls)
+        dealer_ls = self.draw(self.hidden_card, dealer_ls)
+        for card in [self.obs_space[0], self.hidden_card]:
+            if card > 1:
+                dealer_ls[0] += card
+            else:
+                dealer_ls[1] += 1
+        dealer_sum = self.solve_sum(dealer_ls) 
+        while dealer_sum < 17:
+            card = self.decks.pop(0)
+            dealer_ls = self.draw(card, dealer_ls) 
+            dealer_sum = self.solve_sum(dealer_ls)  
+        if dealer_sum > 21:
+            return 1 
+        else:
+            player_sum = self.solve_sum(self.obs_space[1:])
+            if player_sum > dealer_sum:
+                return 1
+            elif player_sum < dealer_sum:
+                return -1 
+            else:
+                return 0
 
-
-    def play(self):
+    def play(self, agent):
         # Draw initial cards.
-        self.palyer_draw(self.decks.pop(0))
+        self.obs_space[1:] = self.draw(self.decks.pop(0), self.obs_space[1:])
         self.obs_space[0] = self.decks.pop(0)
-        self.palyer_draw(self.decks.pop(0))
+        self.obs_space[1:] = self.draw(self.decks.pop(0), self.obs_space[1:])
         self.hidden_card = self.decks.pop(0) 
         # Play game.
         while True:
-            act = self.agent.decide(self.obs_space)
-            assert act in self.act_space 
+            act = agent.decide(self.obs_space)
+            assert act in self.act_space
             if act == self.act_space[0]:
                 reward = self.solve_stick()
                 break
             elif act == self.act_space[1]:
-                self.obs_space[1] += self.decks.pop(0)
-                reward = 0 if self.solve_sum(self.obs_space[1:]) > 21 else 0
-                continue 
+                self.obs_space[1:] = self.draw(self.decks.pop(0), self.obs_space[1:])
+                if self.solve_sum(self.obs_space[1:]) > 21:
+                    reward = -1
+                    break 
+                else:
+                    reward = 0
+                    continue 
+        print(reward)
         return reward
+    
+
+class human():
+    def decide(self, obs_space):
+        print(obs_space)
+        act = int(input())
+        return act
+    
+    
+def main():
+    h = human()
+    e = BlackJackSingleEnv()
+    e.play(h)
+
+
+if __name__ == "__main__":
+    main()
