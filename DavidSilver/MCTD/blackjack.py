@@ -11,7 +11,7 @@ class BlackJackSingleEnv():
         self.obs_space = [0, 0, 0] 
         self.hidden_card = None
         self.decks = [2, 3, 4, 5, 6, 7, 8, 9] * 4 + [10] * 12 + [1] * 4
-        random.shuffle(self.decks) 
+        random.shuffle(self.decks)
 
     def palyer_draw(self, card):
         if card > 1: 
@@ -22,7 +22,13 @@ class BlackJackSingleEnv():
 
     def solve_sum(self, ls):
         # ls: (Current sum, Number of ace)
-        pass
+        x = sum(ls[0]) 
+        for _ in range(ls[1]):
+            if x + 11 > 21:
+                x += 1
+            else: 
+                x += 11
+        return x
 
 
     def solve_stick(self):
