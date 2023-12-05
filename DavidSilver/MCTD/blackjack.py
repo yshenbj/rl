@@ -4,6 +4,7 @@ import random
 
 class BlackJackSingleEnv():
     def __init__(self):
+        self.print = True
         # action space: (Stick, Twist)
         self.act_space = (0, 1)
         # state space: (Dealer's showing card, Current sum, Number of ace)
@@ -13,6 +14,8 @@ class BlackJackSingleEnv():
         random.shuffle(self.decks)
 
     def draw(self, card, ls):
+        if self.print:
+            print(card)
         # ls: (Current sum, Number of ace)
         if card > 1: 
             ls[0] += card
@@ -32,14 +35,11 @@ class BlackJackSingleEnv():
         return x
 
     def solve_stick(self):
+        if self.print:
+            print("Dealer's card:")
         dealer_ls = [0, 0]
         dealer_ls = self.draw(self.obs_space[0], dealer_ls)
         dealer_ls = self.draw(self.hidden_card, dealer_ls)
-        for card in [self.obs_space[0], self.hidden_card]:
-            if card > 1:
-                dealer_ls[0] += card
-            else:
-                dealer_ls[1] += 1
         dealer_sum = self.solve_sum(dealer_ls) 
         while dealer_sum < 17:
             card = self.decks.pop(0)
@@ -58,18 +58,29 @@ class BlackJackSingleEnv():
 
     def play(self, agent):
         # Draw initial cards.
+        if self.print: 
+            print("Player's card:")
         self.obs_space[1:] = self.draw(self.decks.pop(0), self.obs_space[1:])
         self.obs_space[0] = self.decks.pop(0)
+        if self.print: 
+            print("Dealer's card:")
+            print(self.obs_space[0])     
+        if self.print: 
+            print("Player's card:")
         self.obs_space[1:] = self.draw(self.decks.pop(0), self.obs_space[1:])
         self.hidden_card = self.decks.pop(0) 
         # Play game.
         while True:
+            if self.print:
+                print('Your action? (Stay:0/hit:1)')
             act = agent.decide(self.obs_space)
             assert act in self.act_space
             if act == self.act_space[0]:
                 reward = self.solve_stick()
                 break
             elif act == self.act_space[1]:
+                if self.print:
+                    print("Player's card:")
                 self.obs_space[1:] = self.draw(self.decks.pop(0), self.obs_space[1:])
                 if self.solve_sum(self.obs_space[1:]) > 21:
                     reward = -1
@@ -77,13 +88,17 @@ class BlackJackSingleEnv():
                 else:
                     reward = 0
                     continue 
-        print(reward)
+        if self.print:
+            if reward > 0:
+                print('You win!')
+            else:
+                print('You lose!')
         return reward
     
 
 class human():
     def decide(self, obs_space):
-        print(obs_space)
+        # print(obs_space)
         act = int(input())
         return act
     
