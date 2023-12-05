@@ -2,6 +2,7 @@
 import numpy as np 
 import random
 
+
 class BlackJackSingleEnv():
     def __init__(self, print_cards=True):
         self.p = print_cards
