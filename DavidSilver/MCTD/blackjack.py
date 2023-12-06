@@ -1,6 +1,9 @@
-# Black Jack environmemt.
+# Black Jack environmemt, MC-learning.
 import numpy as np 
 import random
+import itertools
+from tqdm import tqdm
+import json
 
 
 class BlackJackSingleEnv():
@@ -78,6 +81,8 @@ class BlackJackSingleEnv():
             assert act in self.act_space
             if act == self.act_space[0]:
                 reward = self.solve_stick()
+                if hasattr(agent, 'update'):
+                    agent.update(reward)
                 break
             elif act == self.act_space[1]:
                 if self.p:
@@ -85,9 +90,13 @@ class BlackJackSingleEnv():
                 self.obs_space[1:] = self.draw(self.decks.pop(0), self.obs_space[1:])
                 if self.solve_sum(self.obs_space[1:]) > 21:
                     reward = -1
+                    if hasattr(agent, 'update'):
+                        agent.update(reward)
                     break 
                 else:
                     reward = 0
+                    if hasattr(agent, 'update'):
+                        agent.update(reward)
                     continue 
         if self.p:
             if reward > 0:
@@ -99,17 +108,83 @@ class BlackJackSingleEnv():
         return reward
     
 
-class human():
+class Human():
     def decide(self, obs_space):
         # print(obs_space)
         act = int(input())
         return act 
     
     
+class Agent():
+    """Random policy."""
+    def __init__(self, q=None):
+        self.s_ls = []
+        self.a_ls = []
+        self.r_ls = []
+        self.n = 0
+        self.q = q
+    
+    def decide(self, obs_space):
+        print(obs_space)
+        self.s_ls.append(obs_space)
+        if self.q:
+            k0 = ' '.join(map(str, obs_space+[0]))
+            k1 = ' '.join(map(str, obs_space+[1]))
+            if (k0 in self.q.keys()) & (k1 in self.q.keys()):
+                if self.q[k0] > self.q[k1]:
+                    a = 0 
+                elif self.q[k0] < self.q[k1]:
+                    a = 1
+                else:
+                    a = random.randint(0, 1)
+            else:
+                # print("Never see!")
+                a = random.randint(0, 1)
+        else:
+            a = random.randint(0, 1)
+        self.a_ls.append(a)
+        return a
+    
+    def update(self, reward):
+        self.n += 1
+        self.r_ls.append(reward)
+        
+    def get_episode(self):
+        print(self.s_ls)
+        return self.s_ls, self.a_ls, self.r_ls, self.n
+    
+
+def mc_learning(n_iter):
+    q = {}
+    c = {}
+    for _ in tqdm(range(n_iter)):
+        a = Agent()
+        e = BlackJackSingleEnv(print_cards=False)
+        r = e.play(a)
+        s_ls, a_ls, r_ls, n = a.get_episode()
+        g_ls = list(itertools.accumulate(r_ls))[::-1] 
+        for i in range(n):
+            k = s_ls[i].copy()
+            k.append(a_ls[i])
+            k = ' '.join(map(str, k))
+            c[k] = c.get(k, 0) + 1
+            v = q.get(k, 0)
+            v += (g_ls[i] - v) / c[k] 
+            q[k] = v
+    return q, c
+    
+            
+def train(n_iter=10):
+    q, c = mc_learning(n_iter)
+    json.dump(q, open('mc_q.json', 'w') )      
+    json.dump(c, open('mc_c.json', 'w') )             
+             
+        
 def main():
-    h = human()
-    e = BlackJackSingleEnv()
-    e.play(h)
+    train()
+    # h = Human()
+    # e = BlackJackSingleEnv(print_cards=True)
+    # e.play(h)
 
 
 if __name__ == "__main__":

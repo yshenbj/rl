@@ -16,6 +16,17 @@ import itertools
 # a = np.array([[1,2,3],[4,5,6],[7,8,9]])
 # print(a[tuple([1,1])]) 
 
+# class Agent():
+#     def update():
+#         pass
+    
+# a = Agent()
+# print(hasattr(a, 'update'))
 
-a = (0, 1)
-print(1 in a)
+dict = {
+    'a': 0
+}
+v = dict.get('b', 0)
+v += 1
+dict['b'] = v
+print(dict)
