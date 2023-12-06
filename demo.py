@@ -22,11 +22,3 @@ import itertools
     
 # a = Agent()
 # print(hasattr(a, 'update'))
-
-dict = {
-    'a': 0
-}
-v = dict.get('b', 0)
-v += 1
-dict['b'] = v
-print(dict)

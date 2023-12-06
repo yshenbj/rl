@@ -125,8 +125,7 @@ class Agent():
         self.q = q
     
     def decide(self, obs_space):
-        print(obs_space)
-        self.s_ls.append(obs_space)
+        self.s_ls.append(obs_space.copy())
         if self.q:
             k0 = ' '.join(map(str, obs_space+[0]))
             k1 = ' '.join(map(str, obs_space+[1]))
@@ -150,7 +149,6 @@ class Agent():
         self.r_ls.append(reward)
         
     def get_episode(self):
-        print(self.s_ls)
         return self.s_ls, self.a_ls, self.r_ls, self.n
     
 
@@ -160,7 +158,7 @@ def mc_learning(n_iter):
     for _ in tqdm(range(n_iter)):
         a = Agent()
         e = BlackJackSingleEnv(print_cards=False)
-        r = e.play(a)
+        e.play(a)
         s_ls, a_ls, r_ls, n = a.get_episode()
         g_ls = list(itertools.accumulate(r_ls))[::-1] 
         for i in range(n):
@@ -174,7 +172,7 @@ def mc_learning(n_iter):
     return q, c
     
             
-def train(n_iter=10):
+def train(n_iter=10000000):
     q, c = mc_learning(n_iter)
     json.dump(q, open('mc_q.json', 'w') )      
     json.dump(c, open('mc_c.json', 'w') )             
