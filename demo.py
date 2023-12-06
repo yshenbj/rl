@@ -22,3 +22,9 @@ import itertools
     
 # a = Agent()
 # print(hasattr(a, 'update'))
+
+a = 1 
+b = 2
+ls = [a, b]
+b += 1 
+print(ls, b)
