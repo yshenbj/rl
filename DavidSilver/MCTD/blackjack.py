@@ -110,7 +110,6 @@ class BlackJackSingleEnv():
 
 class Human():
     def decide(self, obs_space):
-        # print(obs_space)
         act = int(input())
         return act 
     
@@ -137,7 +136,7 @@ class Agent():
                 else:
                     a = random.randint(0, 1)
             else:
-                # print("Never see!")
+                print("Never see!")
                 a = random.randint(0, 1)
         else:
             a = random.randint(0, 1)
@@ -162,7 +161,7 @@ def mc_learning(n_iter):
         s_ls, a_ls, r_ls, n = a.get_episode()
         g_ls = list(itertools.accumulate(r_ls))[::-1] 
         for i in range(n):
-            k = s_ls[i].copy()
+            k = s_ls[i]
             k.append(a_ls[i])
             k = ' '.join(map(str, k))
             c[k] = c.get(k, 0) + 1
@@ -172,7 +171,7 @@ def mc_learning(n_iter):
     return q, c
     
             
-def train(n_iter=100000000):
+def train(n_iter=500000000):
     q, c = mc_learning(n_iter)
     json.dump(q, open('mc_q.json', 'w') )      
     json.dump(c, open('mc_c.json', 'w') )             
