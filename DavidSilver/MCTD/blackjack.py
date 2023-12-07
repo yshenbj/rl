@@ -136,7 +136,7 @@ class Agent():
                 else:
                     a = random.randint(0, 1)
             else:
-                print("Never see!")
+                # print("Never see!")
                 a = random.randint(0, 1)
         else:
             a = random.randint(0, 1)
@@ -171,7 +171,7 @@ def mc_learning(n_iter):
     return q, c
     
             
-def train(n_iter=500000000):
+def train(n_iter=100000000):
     q, c = mc_learning(n_iter)
     json.dump(q, open('mc_q.json', 'w') )      
     json.dump(c, open('mc_c.json', 'w') )             
