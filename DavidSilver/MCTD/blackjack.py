@@ -40,7 +40,7 @@ class BlackJackSingleEnv():
 
     def solve_stick(self):
         if self.p:
-            print("Dealer's card:")
+            print("Dealer's cards:")
         dealer_ls = [0, 0]
         dealer_ls = self.draw(self.obs_space[0], dealer_ls)
         dealer_ls = self.draw(self.hidden_card, dealer_ls)
