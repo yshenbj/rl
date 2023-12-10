@@ -38,16 +38,17 @@ class env():
                 if s[0] < 3: s[0] += 1
             r_ls.append(self.reward)
             n += 1
-        g_ls = list(itertools.accumulate(r_ls))[::-1] 
-        return s_ls, g_ls, n
+        s_ls.append(s)
+        return s_ls, r_ls, n
 
     def evaluation(self, n_iter):
         for _ in tqdm(range(n_iter)):
-            s_ls, g_ls, n = self.sampling() 
+            s_ls, r_ls, n = self.sampling() 
             for i in range(n):
-                s = tuple(s_ls[i])
-                self.states_cnt[s] += 1 
-                self.values[s] += (g_ls[i] - self.values[s]) / self.states_cnt[s] 
+                s0 = tuple(s_ls[i])
+                s1 = tuple(s_ls[i + 1])
+                self.states_cnt[s0] += 1 
+                self.values[s0] += (r_ls[i] + self.values[s1] - self.values[s0]) / self.states_cnt[s0] 
         return self.values 
     
 
