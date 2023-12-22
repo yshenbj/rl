@@ -38,7 +38,7 @@ class env():
                 if s[0] < 3: s[0] += 1
             r_ls.append(self.reward)
             n += 1
-        g_ls = list(itertools.accumulate(r_ls))[::-1] 
+        g_ls = list(itertools.accumulate(r_ls[::-1]))
         return s_ls, g_ls, n
 
     def evaluation(self, n_iter):
