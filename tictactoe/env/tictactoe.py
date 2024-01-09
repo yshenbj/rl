@@ -37,15 +37,32 @@ class TicTacToeEnv(Env):
     def _render_frame(self):
         if self.window is None and self.render_mode == "human":
             pygame.init()
-            pygame.dispaly.init()
             self.window = pygame.display.set_mode(
                 (self.window_size, self.window_size)
             )
         if self.clock is None and self.render_mode == "human":
             self.clock = pygame.time.Clock()
         canvas = pygame.Surface(
-            (self.win)
+            (self.window_size, self.window_size)
         )
+        canvas.fill((255, 255, 255))
+        pix_square_size = (self.window_size / 3)
+        # pygame.draw.rect(
+        #     canvas, 
+        #     (255, 0, 0),
+        #     pygame.Rect(
+        #     )
+        # )
+        for i in range(3):
+            for j in range(3):
+                if self._deck[i, j] == -1:
+                    pygame.draw.circle(
+                        canvas,
+                        (255, 255, 255),
+                        (pix_square_size * (0.5 + i),  pix_square_size * (0.5 + j))
+                    )
+                elif self._deck[i, j] == 1:
+                    pass
     
     def step(self, player, location):
         if self._deck[location] == 0:
@@ -90,4 +107,77 @@ print(deck)
 (deck.sum(axis=1) == -3).any()
 (deck.sum(axis=0) == 3).any()
 print(np.fliplr(deck).diagonal().sum() == 1)
+# %%
+import numpy as np
+
+deck = np.zeros((3, 3))
+ls = deck.reshape(-1).copy()
+print(ls)
+ls[0] = -1
+print(ls)
+print(deck)
+# %%
+import pygame
+
+pygame.init()
+window = pygame.display.set_mode(
+    (512, 512)
+)
+clock = pygame.time.Clock()
+canvas = pygame.Surface((512, 512))
+canvas.fill((255, 255, 255))
+
+window.blit(canvas, canvas.get_rect())
+pygame.event.pump()
+pygame.display.update()
+clock.tick(10)
+pygame.display.quit()
+pygame.quit()
+
+# %%
+# Example file showing a circle moving on screen
+import pygame
+
+# pygame setup
+pygame.init()
+screen = pygame.display.set_mode((1280, 720))
+clock = pygame.time.Clock()
+running = True
+dt = 0
+
+player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+
+while running:
+    # poll for events
+    # pygame.QUIT event means the user clicked X to close your window
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # fill the screen with a color to wipe away anything from last frame
+    screen.fill("purple")
+
+    pygame.draw.circle(screen, "red", player_pos, 40)
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_w]:
+        player_pos.y -= 300 * dt
+    if keys[pygame.K_s]:
+        player_pos.y += 300 * dt
+    if keys[pygame.K_a]:
+        player_pos.x -= 300 * dt
+    if keys[pygame.K_d]:
+        player_pos.x += 300 * dt
+
+    # flip() the display to put your work on screen
+    pygame.display.flip()
+
+    # limits FPS to 60
+    # dt is delta time in seconds since last frame, used for framerate-
+    # independent physics.
+    dt = clock.tick(60) / 1000
+
+pygame.quit()
+# %%
+pygame.Vector2(512 / 2, 512 / 2)
 # %%
