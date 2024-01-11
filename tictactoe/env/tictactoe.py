@@ -105,7 +105,9 @@ class TicTacToeEnv(Env):
                     )
         
         if self.render_mode == "human":
-            pygame.display.flip()
+            self.window.blit(canvas, canvas.get_rect())
+            pygame.event.pump()
+            pygame.display.update()
             self.clock.tick(self.metadata["render_fps"])
         else:
             return np.transpose(
