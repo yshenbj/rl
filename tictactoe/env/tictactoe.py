@@ -32,7 +32,7 @@ class TicTacToeEnv(Env):
         return self._deck
     
     def _get_info(self):
-        return 
+        return
     
     def _render_frame(self):
         if self.window is None and self.render_mode == "human":
