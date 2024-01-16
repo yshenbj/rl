@@ -1,7 +1,8 @@
 import pygame
+import random
 import numpy as np
 from gymnasium import Env
-from gymnasium.spaces import Dict, Box, Discrete
+from gymnasium.spaces import Box, Discrete, Dict
 
 
 class TicTacToeEnv(Env):
@@ -10,13 +11,9 @@ class TicTacToeEnv(Env):
     def __init__(self, render_mode=None):
         self.window_size = 512
         # Observation space is a 3 * 3 deck.
-        self.observation_space = Dict(
-            {
-                "deck": Box(-1, 1, shape=(3, 3), dtype=int)
-            }
-        )
+        self.observation_space = Box(-1, 1, shape=(3, 3), dtype=int)
         # Action can be (x, y) which put X or O. 
-        self.action_space = Discrete(4)
+        self.action_space = Discrete(9)
         self.render_mode = render_mode
         """
         If human-rendering is used, `self.window` will be a reference
@@ -32,7 +29,7 @@ class TicTacToeEnv(Env):
         return self._deck
     
     def _get_info(self):
-        return
+        return {"player": self._player}
     
     def _render_frame(self):
         if self.window is None and self.render_mode == "human":
@@ -114,12 +111,14 @@ class TicTacToeEnv(Env):
                 np.array(pygame.surface.pixels3d(canvas), axis=(1, 0, 2))
             )
     
-    def step(self, player, location):
+    def step(self, action):
+        location = (action // 3, action % 3)
         if self._deck[location] == 0:
-            self._deck[location] = player
-        val = player * 3
+            self._deck[location] = self._player
+        val = self._player * 3
         terminated = (self._deck.sum(axis=1) == val).any() or (self._deck.sum(axis=0) == val).any() or (self._deck.diagonal().sum() == val) or (np.fliplr(self._deck).diagonal().sum() == val)
         reward = 1 if terminated else 0
+        self._player *= -1
         observation = self._get_obs()
         info = self._get_info()
         if self.render_mode == "human":
@@ -128,11 +127,12 @@ class TicTacToeEnv(Env):
 
     def reset(self):
         self._deck = np.zeros((3, 3))
+        self._player = random.choice((-1, 1))
         observation = self._get_obs()
         info = self._get_info()
         if self.render_mode == "human":
             self._render_frame()
-        return observation, info 
+        return observation, info
     
     def render(self):
         if self.render_mode == "rgb_array":
