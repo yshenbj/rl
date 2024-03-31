@@ -37,7 +37,7 @@ class env():
         return reward, s1, s2
     
     def iteration(self, n_iter):
-        for n in range(n_iter):
+        for _ in range(n_iter):
             q =  np.empty((20, 20, 11))
             for i in range(20):
                 for j in range(20):
@@ -52,13 +52,13 @@ class env():
                     # Improve the policy by acting greedily.
                     self.p[i, j] = self.a[np.argmax(q[i, j])]
                     # Improve the value from any state over one greddy step.
-                    self.v[i, j] = np.max(q[i, j]) / (n + 1)
+                    self.v[i, j] = np.max(q[i, j])
         return self.p, self.v 
 
 
 def main():
     e = env()
-    p, v = e.iteration(100)
+    p, v = e.iteration(500)
     print(p)
     print(v)
 
