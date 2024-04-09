@@ -13,8 +13,7 @@ class env():
         2nd loaction: average requests = 4, average returns = 2.
     """
     def __init__(self):
-        self.p = np.zeros((20, 20)) 
-        self.v = np.zeros((20, 20))
+        self.p = np.zeros((21, 21)) 
         self.avg_req1, self.avg_ret1 = 3, 3
         self.avg_req2, self.avg_ret2 = 4, 2
         self.a = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5]
@@ -36,6 +35,14 @@ class env():
         s1, s2 = np.minimum(s1 - n_ren1 + n_ret1, 20), np.minimum(s2 - n_ren2 + n_ret2, 20)
         return reward, s1, s2
     
+    def evaluation(self, theta=0.01):
+        v = np.zeros((21, 21))
+        while True:
+            delta = 0
+            for k in range(11):
+                
+                pass
+    
     def iteration(self, n_iter):
         for _ in range(n_iter):
             q =  np.empty((20, 20, 11))
@@ -51,8 +58,6 @@ class env():
                         q[i, j, k] = reward + self.v[s1 - 1, s2 - 1]
                     # Improve the policy by acting greedily.
                     self.p[i, j] = self.a[np.argmax(q[i, j])]
-                    # Improve the value from any state over one greddy step.
-                    self.v[i, j] = np.max(q[i, j])
         return self.p, self.v 
 
 
