@@ -1,0 +1,831 @@
+digraph G {
+	0 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	0 -> 10 [label=1]
+	0 -> 30 [label=3]
+	0 -> 40 [label=4]
+	0 -> 20 [label=2]
+	10 [label=10 shape=point style=filled width=0.25]
+	10 -> 1 [label=0.9]
+	10 [label=10 shape=point style=filled width=0.25]
+	10 -> 109 [label=0.1]
+	1 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	1 -> 11 [label=1]
+	1 -> 41 [label=4]
+	1 -> 31 [label=3]
+	1 -> 21 [label=2]
+	11 [label=11 shape=point style=filled width=0.25]
+	11 -> 5 [label=0.9]
+	5 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	41 [label=41 shape=point style=filled width=0.25]
+	41 -> 11 [label=0.9]
+	41 [label=41 shape=point style=filled width=0.25]
+	41 -> 31 [label=0.1]
+	11 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	11 -> 211 [label=2]
+	11 -> 411 [label=4]
+	11 -> 311 [label=3]
+	11 -> 111 [label=1]
+	211 [label=211 shape=point style=filled width=0.25]
+	211 -> 24 [label=0.8]
+	211 [label=211 shape=point style=filled width=0.25]
+	211 -> 118 [label=0.1]
+	211 [label=211 shape=point style=filled width=0.25]
+	211 -> 121 [label=0.1]
+	24 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	24 -> 324 [label=3]
+	24 -> 124 [label=1]
+	24 -> 224 [label=2]
+	24 -> 424 [label=4]
+	324 [label=324 shape=point style=filled width=0.25]
+	324 -> 50 [label=0.8]
+	324 [label=324 shape=point style=filled width=0.25]
+	324 -> 143 [label=0.1]
+	50 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	50 -> 350 [label=3]
+	50 -> 150 [label=1]
+	50 -> 250 [label=2]
+	50 -> 450 [label=4]
+	350 [label=350 shape=point style=filled width=0.25]
+	350 -> 99 [label=0.8]
+	350 [label=350 shape=point style=filled width=0.25]
+	350 -> 131 [label=0.1]
+	99 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	99 -> 499 [label=4]
+	99 -> 399 [label=3]
+	499 [label=499 shape=point style=filled width=0.25]
+	499 -> 127 [label=0.8]
+	127 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	399 [label=399 shape=point style=filled width=0.25]
+	399 -> 170 [label=0.8]
+	170 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	131 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	131 -> 4131 [label=4]
+	4131 [label=4131 shape=point style=filled width=0.25]
+	4131 -> 132 [label=0.9]
+	132 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	150 [label=150 shape=point style=filled width=0.25]
+	150 -> 108 [label=0.8]
+	108 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	250 [label=250 shape=point style=filled width=0.25]
+	250 -> 117 [label=0.8]
+	117 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	117 -> 3117 [label=3]
+	3117 [label=3117 shape=point style=filled width=0.25]
+	3117 -> 168 [label=0.8]
+	168 [label="V(1, 2) =
+0.00\nN = 0" fixedsize=True height=1 width=1]
+	450 [label=450 shape=point style=filled width=0.25]
+	450 -> 120 [label=0.8]
+	120 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	143 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	143 -> 2143 [label=2]
+	2143 [label=2143 shape=point style=filled width=0.25]
+	2143 -> 144 [label=0.9]
+	144 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	124 [label=124 shape=point style=filled width=0.25]
+	124 -> 76 [label=0.8]
+	76 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	224 [label=224 shape=point style=filled width=0.25]
+	224 -> 77 [label=0.2]
+	77 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	424 [label=424 shape=point style=filled width=0.25]
+	424 -> 90 [label=0.2]
+	90 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	118 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	118 -> 2118 [label=2]
+	118 -> 1118 [label=1]
+	2118 [label=2118 shape=point style=filled width=0.25]
+	2118 -> 119 [label=0.1]
+	119 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	1118 [label=1118 shape=point style=filled width=0.25]
+	1118 -> 169 [label=0.9]
+	169 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	121 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	121 -> 1121 [label=1]
+	121 -> 3121 [label=3]
+	1121 [label=1121 shape=point style=filled width=0.25]
+	1121 -> 122 [label=0.2]
+	122 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	3121 [label=3121 shape=point style=filled width=0.25]
+	3121 -> 171 [label=0.8]
+	171 [label="V(2, 0) =
+0.00\nN = 0" fixedsize=True height=1 width=1]
+	411 [label=411 shape=point style=filled width=0.25]
+	411 -> 27 [label=0.9]
+	27 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	311 [label=311 shape=point style=filled width=0.25]
+	311 -> 29 [label=0.1]
+	29 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	111 [label=111 shape=point style=filled width=0.25]
+	111 -> 48 [label=0.1]
+	111 [label=111 shape=point style=filled width=0.25]
+	111 -> 155 [label=0.9]
+	48 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	155 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	155 -> 1155 [label=1]
+	1155 [label=1155 shape=point style=filled width=0.25]
+	1155 -> 156 [label=0.1]
+	156 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	31 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	31 -> 231 [label=2]
+	31 -> 331 [label=3]
+	31 -> 131 [label=1]
+	31 -> 431 [label=4]
+	231 [label=231 shape=point style=filled width=0.25]
+	231 -> 32 [label=0.1]
+	32 [label="V(2, 0) =
+0.00\nN = 0" fixedsize=True height=1 width=1]
+	331 [label=331 shape=point style=filled width=0.25]
+	331 -> 106 [label=0.8]
+	106 [label="V(2, 0) =
+0.00\nN = 0" fixedsize=True height=1 width=1]
+	131 [label=131 shape=point style=filled width=0.25]
+	131 -> 133 [label=0.8]
+	133 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	133 -> 3133 [label=3]
+	3133 [label=3133 shape=point style=filled width=0.25]
+	3133 -> 162 [label=0.1]
+	162 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	431 [label=431 shape=point style=filled width=0.25]
+	431 -> 135 [label=0.1]
+	135 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	31 [label=31 shape=point style=filled width=0.25]
+	31 -> 15 [label=0.1]
+	15 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	21 [label=21 shape=point style=filled width=0.25]
+	21 -> 20 [label=0.8]
+	21 [label=21 shape=point style=filled width=0.25]
+	21 -> 42 [label=0.1]
+	21 [label=21 shape=point style=filled width=0.25]
+	21 -> 61 [label=0.1]
+	20 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	20 -> 420 [label=4]
+	20 -> 320 [label=3]
+	20 -> 220 [label=2]
+	20 -> 120 [label=1]
+	420 [label=420 shape=point style=filled width=0.25]
+	420 -> 40 [label=0.8]
+	40 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	320 [label=320 shape=point style=filled width=0.25]
+	320 -> 45 [label=0.8]
+	320 [label=320 shape=point style=filled width=0.25]
+	320 -> 123 [label=0.1]
+	45 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	45 -> 245 [label=2]
+	45 -> 345 [label=3]
+	45 -> 445 [label=4]
+	45 -> 145 [label=1]
+	245 [label=245 shape=point style=filled width=0.25]
+	245 -> 81 [label=0.8]
+	81 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	345 [label=345 shape=point style=filled width=0.25]
+	345 -> 91 [label=0.8]
+	345 [label=345 shape=point style=filled width=0.25]
+	345 -> 158 [label=0.1]
+	91 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	91 -> 291 [label=2]
+	91 -> 191 [label=1]
+	291 [label=291 shape=point style=filled width=0.25]
+	291 -> 137 [label=0.8]
+	137 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	191 [label=191 shape=point style=filled width=0.25]
+	191 -> 151 [label=0.8]
+	151 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	158 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	158 -> 3158 [label=3]
+	3158 [label=3158 shape=point style=filled width=0.25]
+	3158 -> 159 [label=0.8]
+	159 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	445 [label=445 shape=point style=filled width=0.25]
+	445 -> 105 [label=0.8]
+	105 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	145 [label=145 shape=point style=filled width=0.25]
+	145 -> 112 [label=0.8]
+	112 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	123 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	123 -> 3123 [label=3]
+	3123 [label=3123 shape=point style=filled width=0.25]
+	3123 -> 124 [label=0.8]
+	124 [label="V(1, 2) =
+0.00\nN = 0" fixedsize=True height=1 width=1]
+	220 [label=220 shape=point style=filled width=0.25]
+	220 -> 51 [label=0.8]
+	51 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	120 [label=120 shape=point style=filled width=0.25]
+	120 -> 72 [label=0.8]
+	72 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	42 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	42 -> 242 [label=2]
+	242 [label=242 shape=point style=filled width=0.25]
+	242 -> 43 [label=0.8]
+	43 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	61 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	61 -> 161 [label=1]
+	61 -> 461 [label=4]
+	61 -> 261 [label=2]
+	161 [label=161 shape=point style=filled width=0.25]
+	161 -> 62 [label=0.9]
+	62 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	461 [label=461 shape=point style=filled width=0.25]
+	461 -> 100 [label=0.9]
+	100 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	261 [label=261 shape=point style=filled width=0.25]
+	261 -> 145 [label=0.8]
+	145 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	109 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	109 -> 4109 [label=4]
+	109 -> 3109 [label=3]
+	109 -> 2109 [label=2]
+	4109 [label=4109 shape=point style=filled width=0.25]
+	4109 -> 110 [label=0.8]
+	110 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	3109 [label=3109 shape=point style=filled width=0.25]
+	3109 -> 128 [label=0.8]
+	128 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	2109 [label=2109 shape=point style=filled width=0.25]
+	2109 -> 152 [label=0.8]
+	152 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	30 [label=30 shape=point style=filled width=0.25]
+	30 -> 2 [label=0.8]
+	2 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	2 -> 42 [label=4]
+	2 -> 32 [label=3]
+	2 -> 12 [label=1]
+	2 -> 22 [label=2]
+	42 [label=42 shape=point style=filled width=0.25]
+	42 -> 6 [label=0.8]
+	6 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	32 [label=32 shape=point style=filled width=0.25]
+	32 -> 12 [label=0.8]
+	12 [label="V(2, 0) =
+0.00\nN = 0" fixedsize=True height=1 width=1]
+	12 [label=12 shape=point style=filled width=0.25]
+	12 -> 17 [label=0.8]
+	12 [label=12 shape=point style=filled width=0.25]
+	12 -> 78 [label=0.2]
+	17 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	17 -> 317 [label=3]
+	17 -> 417 [label=4]
+	17 -> 117 [label=1]
+	17 -> 217 [label=2]
+	317 [label=317 shape=point style=filled width=0.25]
+	317 -> 33 [label=0.8]
+	33 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	417 [label=417 shape=point style=filled width=0.25]
+	417 -> 37 [label=0.9]
+	37 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	37 -> 337 [label=3]
+	37 -> 437 [label=4]
+	337 [label=337 shape=point style=filled width=0.25]
+	337 -> 86 [label=0.8]
+	86 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	437 [label=437 shape=point style=filled width=0.25]
+	437 -> 96 [label=0.9]
+	96 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	117 [label=117 shape=point style=filled width=0.25]
+	117 -> 53 [label=0.9]
+	53 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	217 [label=217 shape=point style=filled width=0.25]
+	217 -> 63 [label=0.8]
+	63 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	63 -> 163 [label=1]
+	163 [label=163 shape=point style=filled width=0.25]
+	163 -> 66 [label=0.1]
+	66 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	78 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	78 -> 178 [label=1]
+	178 [label=178 shape=point style=filled width=0.25]
+	178 -> 79 [label=0.8]
+	79 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	22 [label=22 shape=point style=filled width=0.25]
+	22 -> 22 [label=0.1]
+	22 [label=22 shape=point style=filled width=0.25]
+	22 -> 25 [label=0.8]
+	22 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	25 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	25 -> 225 [label=2]
+	25 -> 125 [label=1]
+	25 -> 425 [label=4]
+	225 [label=225 shape=point style=filled width=0.25]
+	225 -> 26 [label=0.8]
+	26 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	125 [label=125 shape=point style=filled width=0.25]
+	125 -> 28 [label=0.2]
+	28 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	425 [label=425 shape=point style=filled width=0.25]
+	425 -> 30 [label=0.8]
+	30 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	40 [label=40 shape=point style=filled width=0.25]
+	40 -> 3 [label=0.1]
+	40 [label=40 shape=point style=filled width=0.25]
+	40 -> 7 [label=0.9]
+	3 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	3 -> 33 [label=3]
+	3 -> 23 [label=2]
+	3 -> 13 [label=1]
+	33 [label=33 shape=point style=filled width=0.25]
+	33 -> 104 [label=0.8]
+	104 [label="V(2, 0) =
+0.00\nN = 0" fixedsize=True height=1 width=1]
+	23 [label=23 shape=point style=filled width=0.25]
+	23 -> 115 [label=0.1]
+	115 [label="V(2, 0) =
+0.00\nN = 0" fixedsize=True height=1 width=1]
+	13 [label=13 shape=point style=filled width=0.25]
+	13 -> 153 [label=0.8]
+	153 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	7 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	7 -> 47 [label=4]
+	7 -> 17 [label=1]
+	7 -> 37 [label=3]
+	7 -> 27 [label=2]
+	47 [label=47 shape=point style=filled width=0.25]
+	47 -> 8 [label=0.9]
+	8 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	17 [label=17 shape=point style=filled width=0.25]
+	17 -> 13 [label=0.9]
+	17 [label=17 shape=point style=filled width=0.25]
+	17 -> 101 [label=0.1]
+	13 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	13 -> 113 [label=1]
+	13 -> 313 [label=3]
+	13 -> 413 [label=4]
+	13 -> 213 [label=2]
+	113 [label=113 shape=point style=filled width=0.25]
+	113 -> 52 [label=0.9]
+	52 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	313 [label=313 shape=point style=filled width=0.25]
+	313 -> 58 [label=0.8]
+	58 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	413 [label=413 shape=point style=filled width=0.25]
+	413 -> 65 [label=0.9]
+	65 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	213 [label=213 shape=point style=filled width=0.25]
+	213 -> 82 [label=0.1]
+	213 [label=213 shape=point style=filled width=0.25]
+	213 -> 84 [label=0.8]
+	213 [label=213 shape=point style=filled width=0.25]
+	213 -> 93 [label=0.1]
+	82 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	82 -> 482 [label=4]
+	82 -> 382 [label=3]
+	482 [label=482 shape=point style=filled width=0.25]
+	482 -> 148 [label=0.9]
+	148 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	382 [label=382 shape=point style=filled width=0.25]
+	382 -> 160 [label=0.8]
+	160 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	84 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	84 -> 184 [label=1]
+	84 -> 284 [label=2]
+	84 -> 384 [label=3]
+	84 -> 484 [label=4]
+	184 [label=184 shape=point style=filled width=0.25]
+	184 -> 85 [label=0.8]
+	85 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	284 [label=284 shape=point style=filled width=0.25]
+	284 -> 92 [label=0.8]
+	92 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	384 [label=384 shape=point style=filled width=0.25]
+	384 -> 95 [label=0.8]
+	384 [label=384 shape=point style=filled width=0.25]
+	384 -> 166 [label=0.1]
+	95 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	95 -> 495 [label=4]
+	95 -> 295 [label=2]
+	95 -> 195 [label=1]
+	495 [label=495 shape=point style=filled width=0.25]
+	495 -> 130 [label=0.2]
+	130 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	295 [label=295 shape=point style=filled width=0.25]
+	295 -> 141 [label=0.2]
+	141 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	195 [label=195 shape=point style=filled width=0.25]
+	195 -> 165 [label=0.8]
+	165 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	166 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	166 -> 3166 [label=3]
+	3166 [label=3166 shape=point style=filled width=0.25]
+	3166 -> 167 [label=0.1]
+	167 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	484 [label=484 shape=point style=filled width=0.25]
+	484 -> 125 [label=0.2]
+	125 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	93 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	93 -> 493 [label=4]
+	93 -> 193 [label=1]
+	93 -> 293 [label=2]
+	493 [label=493 shape=point style=filled width=0.25]
+	493 -> 94 [label=0.8]
+	94 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	193 [label=193 shape=point style=filled width=0.25]
+	193 -> 146 [label=0.8]
+	146 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	293 [label=293 shape=point style=filled width=0.25]
+	293 -> 147 [label=0.8]
+	147 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	101 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	101 -> 4101 [label=4]
+	101 -> 1101 [label=1]
+	101 -> 2101 [label=2]
+	4101 [label=4101 shape=point style=filled width=0.25]
+	4101 -> 102 [label=0.8]
+	102 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	1101 [label=1101 shape=point style=filled width=0.25]
+	1101 -> 113 [label=0.8]
+	113 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	2101 [label=2101 shape=point style=filled width=0.25]
+	2101 -> 138 [label=0.2]
+	138 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	37 [label=37 shape=point style=filled width=0.25]
+	37 -> 16 [label=0.8]
+	37 [label=37 shape=point style=filled width=0.25]
+	37 -> 73 [label=0.1]
+	16 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	16 -> 416 [label=4]
+	16 -> 316 [label=3]
+	16 -> 116 [label=1]
+	16 -> 216 [label=2]
+	416 [label=416 shape=point style=filled width=0.25]
+	416 -> 39 [label=0.8]
+	39 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	316 [label=316 shape=point style=filled width=0.25]
+	316 -> 41 [label=0.8]
+	41 [label="V(2, 0) =
+0.00\nN = 0" fixedsize=True height=1 width=1]
+	116 [label=116 shape=point style=filled width=0.25]
+	116 -> 44 [label=0.8]
+	116 [label=116 shape=point style=filled width=0.25]
+	116 -> 67 [label=0.2]
+	44 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	67 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	67 -> 267 [label=2]
+	267 [label=267 shape=point style=filled width=0.25]
+	267 -> 68 [label=0.1]
+	68 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	216 [label=216 shape=point style=filled width=0.25]
+	216 -> 46 [label=0.8]
+	46 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	73 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	73 -> 373 [label=3]
+	373 [label=373 shape=point style=filled width=0.25]
+	373 -> 74 [label=0.8]
+	74 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	27 [label=27 shape=point style=filled width=0.25]
+	27 -> 21 [label=0.1]
+	27 [label=27 shape=point style=filled width=0.25]
+	27 -> 56 [label=0.8]
+	21 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	21 -> 221 [label=2]
+	21 -> 121 [label=1]
+	221 [label=221 shape=point style=filled width=0.25]
+	221 -> 36 [label=0.8]
+	36 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	121 [label=121 shape=point style=filled width=0.25]
+	121 -> 157 [label=0.9]
+	157 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	56 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	56 -> 356 [label=3]
+	56 -> 156 [label=1]
+	56 -> 256 [label=2]
+	56 -> 456 [label=4]
+	356 [label=356 shape=point style=filled width=0.25]
+	356 -> 57 [label=0.8]
+	57 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	57 -> 457 [label=4]
+	57 -> 257 [label=2]
+	57 -> 357 [label=3]
+	57 -> 157 [label=1]
+	457 [label=457 shape=point style=filled width=0.25]
+	457 -> 80 [label=0.8]
+	80 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	257 [label=257 shape=point style=filled width=0.25]
+	257 -> 89 [label=0.8]
+	89 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	357 [label=357 shape=point style=filled width=0.25]
+	357 -> 98 [label=0.8]
+	357 [label=357 shape=point style=filled width=0.25]
+	357 -> 149 [label=0.1]
+	98 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	98 -> 298 [label=2]
+	98 -> 198 [label=1]
+	98 -> 398 [label=3]
+	298 [label=298 shape=point style=filled width=0.25]
+	298 -> 126 [label=0.8]
+	126 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	198 [label=198 shape=point style=filled width=0.25]
+	198 -> 142 [label=0.8]
+	142 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	398 [label=398 shape=point style=filled width=0.25]
+	398 -> 161 [label=0.8]
+	161 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	149 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	149 -> 1149 [label=1]
+	1149 [label=1149 shape=point style=filled width=0.25]
+	1149 -> 150 [label=0.9]
+	150 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	157 [label=157 shape=point style=filled width=0.25]
+	157 -> 111 [label=0.8]
+	111 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	156 [label=156 shape=point style=filled width=0.25]
+	156 -> 60 [label=0.8]
+	60 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	256 [label=256 shape=point style=filled width=0.25]
+	256 -> 64 [label=0.8]
+	64 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	456 [label=456 shape=point style=filled width=0.25]
+	456 -> 71 [label=0.8]
+	71 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	20 [label=20 shape=point style=filled width=0.25]
+	20 -> 4 [label=0.8]
+	20 [label=20 shape=point style=filled width=0.25]
+	20 -> 18 [label=0.1]
+	20 [label=20 shape=point style=filled width=0.25]
+	20 -> 34 [label=0.1]
+	4 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	4 -> 24 [label=2]
+	4 -> 14 [label=1]
+	4 -> 44 [label=4]
+	4 -> 34 [label=3]
+	24 [label=24 shape=point style=filled width=0.25]
+	24 -> 9 [label=0.2]
+	9 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	14 [label=14 shape=point style=filled width=0.25]
+	14 -> 10 [label=0.8]
+	10 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	44 [label=44 shape=point style=filled width=0.25]
+	44 -> 14 [label=0.8]
+	14 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	34 [label=34 shape=point style=filled width=0.25]
+	34 -> 23 [label=0.8]
+	34 [label=34 shape=point style=filled width=0.25]
+	34 -> 54 [label=0.1]
+	34 [label=34 shape=point style=filled width=0.25]
+	34 -> 69 [label=0.1]
+	23 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	23 -> 423 [label=4]
+	23 -> 323 [label=3]
+	23 -> 223 [label=2]
+	23 -> 123 [label=1]
+	423 [label=423 shape=point style=filled width=0.25]
+	423 -> 47 [label=0.8]
+	47 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	323 [label=323 shape=point style=filled width=0.25]
+	323 -> 49 [label=0.1]
+	323 [label=323 shape=point style=filled width=0.25]
+	323 -> 87 [label=0.8]
+	323 [label=323 shape=point style=filled width=0.25]
+	323 -> 139 [label=0.1]
+	49 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	49 -> 249 [label=2]
+	249 [label=249 shape=point style=filled width=0.25]
+	249 -> 116 [label=0.9]
+	116 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	87 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	87 -> 187 [label=1]
+	87 -> 387 [label=3]
+	87 -> 487 [label=4]
+	87 -> 287 [label=2]
+	187 [label=187 shape=point style=filled width=0.25]
+	187 -> 88 [label=0.8]
+	88 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	387 [label=387 shape=point style=filled width=0.25]
+	387 -> 97 [label=0.8]
+	97 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	487 [label=487 shape=point style=filled width=0.25]
+	487 -> 129 [label=0.8]
+	129 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	287 [label=287 shape=point style=filled width=0.25]
+	287 -> 136 [label=0.8]
+	136 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	136 -> 4136 [label=4]
+	4136 [label=4136 shape=point style=filled width=0.25]
+	4136 -> 154 [label=0.8]
+	154 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	139 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	139 -> 1139 [label=1]
+	1139 [label=1139 shape=point style=filled width=0.25]
+	1139 -> 140 [label=0.9]
+	140 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	223 [label=223 shape=point style=filled width=0.25]
+	223 -> 59 [label=0.2]
+	59 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	123 [label=123 shape=point style=filled width=0.25]
+	123 -> 75 [label=0.8]
+	75 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	54 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	54 -> 454 [label=4]
+	54 -> 154 [label=1]
+	54 -> 254 [label=2]
+	454 [label=454 shape=point style=filled width=0.25]
+	454 -> 55 [label=0.9]
+	55 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	154 [label=154 shape=point style=filled width=0.25]
+	154 -> 103 [label=0.1]
+	103 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	254 [label=254 shape=point style=filled width=0.25]
+	254 -> 163 [label=0.8]
+	163 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	69 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	69 -> 469 [label=4]
+	69 -> 269 [label=2]
+	69 -> 369 [label=3]
+	469 [label=469 shape=point style=filled width=0.25]
+	469 -> 70 [label=0.8]
+	70 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+	269 [label=269 shape=point style=filled width=0.25]
+	269 -> 107 [label=0.9]
+	107 [label="V(0, 2) =
+0.03\nN = 9" fixedsize=True height=1 width=1]
+	369 [label=369 shape=point style=filled width=0.25]
+	369 -> 114 [label=0.8]
+	114 [label="V(1, 2) =
+0.00\nN = 0" fixedsize=True height=1 width=1]
+	18 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	18 -> 318 [label=3]
+	18 -> 118 [label=1]
+	18 -> 218 [label=2]
+	318 [label=318 shape=point style=filled width=0.25]
+	318 -> 19 [label=0.8]
+	19 [label="V(2, 0) =
+0.00\nN = 0" fixedsize=True height=1 width=1]
+	118 [label=118 shape=point style=filled width=0.25]
+	118 -> 83 [label=0.8]
+	83 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	218 [label=218 shape=point style=filled width=0.25]
+	218 -> 134 [label=0.8]
+	134 [label="V(1, 0) =
+-0.00\nN = 42" fixedsize=True height=1 width=1]
+	34 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	34 -> 434 [label=4]
+	34 -> 134 [label=1]
+	34 -> 234 [label=2]
+	434 [label=434 shape=point style=filled width=0.25]
+	434 -> 35 [label=0.9]
+	35 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	134 [label=134 shape=point style=filled width=0.25]
+	134 -> 38 [label=0.9]
+	38 [label="V(0, 0) =
+0.00\nN = 304" fixedsize=True height=1 width=1]
+	234 [label=234 shape=point style=filled width=0.25]
+	234 -> 164 [label=0.8]
+	164 [label="V(0, 1) =
+0.04\nN = 122" fixedsize=True height=1 width=1]
+}
