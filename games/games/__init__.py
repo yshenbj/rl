@@ -6,6 +6,6 @@ register(
 )
 
 register(
-    id = 'games/BlackJack',
+    id = 'games/Blackjack',
     entry_point = 'games.envs:BlackjackEnv'
 )
