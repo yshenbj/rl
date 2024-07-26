@@ -1,1 +1,2 @@
-from games.envs.grid_world import GridWorldEnv
+from games.envs.gridworld import GridWorldEnv
+from games.envs.blackjack import BlackjackEnv

@@ -6,4 +6,5 @@ games.egg-info/dependency_links.txt
 games.egg-info/requires.txt
 games.egg-info/top_level.txt
 games/envs/__init__.py
-games/envs/grid_world.py
+games/envs/blackjack.py
+games/envs/gridworld.py
