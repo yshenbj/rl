@@ -171,7 +171,7 @@ def mc_learning(n_iter):
     return q, c
     
             
-def train(n_iter=100000000):
+def train(n_iter=10000000):
     q, c = mc_learning(n_iter)
     json.dump(q, open('mc_q.json', 'w') )      
     json.dump(c, open('mc_c.json', 'w') )             
