@@ -1,19 +1,18 @@
 import pygame
-import random
 import numpy as np
-from gymnasium import Env
-from gymnasium.spaces import Box, Discrete, Dict
+import gymnasium as gym
+from gymnasium import spaces
 
 
-class TicTacToeEnv(Env):
+class TicTacToeEnv(gym.Env):
     metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 4}
     
     def __init__(self, render_mode=None):
         self.window_size = 512
         # Observation space is a 3 * 3 deck.
-        self.observation_space = Box(-1, 1, shape=(3, 3), dtype=int)
+        self.observation_space = spaces.Box(-1, 1, shape=(3, 3), dtype=int)
         # Action can be (x, y) which put X or O. 
-        self.action_space = Discrete(9)
+        self.action_space = spaces.Discrete(9)
         self.render_mode = render_mode
         """
         If human-rendering is used, `self.window` will be a reference
@@ -126,13 +125,14 @@ class TicTacToeEnv(Env):
         return observation, reward, terminated, False, info
 
     def reset(self):
-        self._deck = np.zeros((3, 3))
-        self._player = random.choice((-1, 1))
-        observation = self._get_obs()
-        info = self._get_info()
-        if self.render_mode == "human":
-            self._render_frame()
-        return observation, info
+        # self._deck = np.zeros((3, 3))
+        # self._player = random.choice((-1, 1))
+        # observation = self._get_obs()
+        # info = self._get_info()
+        # if self.render_mode == "human":
+        #     self._render_frame()
+        # return observation, info
+        pass
     
     def render(self):
         if self.render_mode == "rgb_array":
