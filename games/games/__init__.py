@@ -9,3 +9,8 @@ register(
     id = 'games/Blackjack',
     entry_point = 'games.envs:BlackjackEnv'
 )
+
+register(
+    id = 'games/TicTacToe',
+    entry_point = 'games.envs:TicTacToeEnv'
+)

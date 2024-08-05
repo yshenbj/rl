@@ -8,3 +8,4 @@ games.egg-info/top_level.txt
 games/envs/__init__.py
 games/envs/blackjack.py
 games/envs/gridworld.py
+games/envs/tictactoe.py
