@@ -161,7 +161,7 @@ class TicTacToeEnv(gym.Env):
             self.clock.tick(self.metadata["render_fps"])
         else:
             return np.transpose(
-                np.array(pygame.surface.pixels3d(canvas), axis=(1, 0, 2))
+                np.array(pygame.surfarray.pixels3d(canvas), axis=(1, 0, 2))
             )
     
     def render(self):
