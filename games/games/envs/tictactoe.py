@@ -67,20 +67,20 @@ class TicTacToeEnv(gym.Env):
         return observation, info
     
     def step(self, action):
-        assert self.action_space.contains(action)
-        self._agent_index += 1
-        if self._agent_index >= self.agent_index_space.n:
-            self._agent_index = 0        
-
+        assert self.action_space.contains(action)     
         mark = self.agent_mark_mapping[self._agent_index]
         move = (action // 3, action % 3)
         reward, terminated = 0, False
         if self._board[move] == 0:
             self._board[move] = mark
             reward, terminated = is_end(self._board, mark)
-
+            
+        self._agent_index += 1
+        if self._agent_index >= self.agent_index_space.n:
+            self._agent_index = 0 
+        
         if self.render_mode == "human":
-            self._render_frame()
+            self._render_frame()  
             
         return self._get_obs(), reward, terminated, False, self._get_info()
     
