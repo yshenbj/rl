@@ -271,12 +271,15 @@ def batch_update(policy_value_net, queue, batch_size):
     return policy_value_net.update(state, mcts_p, reward)
 
 
-def main(num_epochs=5, num_parallels=4, batch_size=128):
+def main(num_epochs=50, num_parallels=16, batch_size=256):
+    mp.set_start_method('spawn', force=True)
+
     env = gym.make('games/TicTacToe', max_episode_steps=9)
     policy_value_net = PolicyValueNet()
     policy_value_net.net.share_memory()
     queue = mp.Queue(maxsize=batch_size)
     run = mp.Value('i', 1)
+
     jobs = []
     for _ in range(num_parallels):
         p = mp.Process(target=record, args=(env, policy_value_net, queue, run))
