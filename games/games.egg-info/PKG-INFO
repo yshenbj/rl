@@ -1,5 +1,0 @@
-Metadata-Version: 2.1
-Name: games
-Version: 0.0.1
-Requires-Dist: gymnasium
-Requires-Dist: pygame
