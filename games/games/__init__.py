@@ -14,3 +14,8 @@ register(
     id = 'games/TicTacToe',
     entry_point = 'games.envs:TicTacToeEnv'
 )
+
+register(
+    id = 'games/Gomoku',
+    entry_point = 'games.envs:GomokuEnv'    
+)

@@ -3,20 +3,14 @@ import gymnasium as gym
 from gymnasium import spaces
 
 
-def is_end(board, mark):
-    n_rows, n_cols = board.shape
-    for row_index in range(n_rows):
-        row = board[row_index, :]
-        if (row == mark).all():
-            return 1, True
-    for col_index in range(n_cols):
-        col = board[:, col_index]
-        if (col == mark).all():
-            return 1, True    
-    if (board.diagonal() == mark).all() or (np.fliplr(board).diagonal() == mark).all():
-        return 1, True
-    else:
-        return 0, False
+def check(ls, mark):
+    cnt = 0
+    for element in ls:
+        if element == mark:
+            cnt += 1
+        else:
+            cnt = 0
+    return cnt > 4
 
 
 class GomokuEnv(gym.Env):
@@ -41,15 +35,12 @@ class GomokuEnv(gym.Env):
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
         # Initialize the deck with zeros and the agent index.
-        self._board = np.zeros((3, 3), dtype=np.int8)
+        self._board = np.zeros((self.size, self.size), dtype=np.int8)
         # Randomly pick an agent.
         self._agent_index = self.agent_index_space.sample()
 
         observation = self._get_obs()
         info = self._get_info()
-
-        if self.render_mode == "human":
-            self._render_frame()
         
         return observation, info
     
@@ -60,13 +51,21 @@ class GomokuEnv(gym.Env):
         reward, terminated = 0, False
         if self._board[move] == 0:
             self._board[move] = mark
-            reward, terminated = is_end(self._board, mark)
+            reward, terminated = self.is_end(mark, move)
             
         self._agent_index += 1
         if self._agent_index >= self.agent_index_space.n:
             self._agent_index = 0 
-        
-        if self.render_mode == "human":
-            self._render_frame()  
             
         return self._get_obs(), reward, terminated, False, self._get_info()
+    
+    def is_end(self, mark, move):
+        x, y = move
+        row_end = check([self._board[i, y] for i in range(max(0, x - 4), min(self.size, x + 5))], mark)
+        col_end = check([self._board[x, i] for i in range(max(0, y - 4), min(self.size, y + 5))], mark)
+        diag_end = check([self._board[x+i][y+i] for i in range(max(-x, -y, -4), min(self.size - x, self.size - y, 5))], mark)
+        anti_diag_end = check([self._board[x+i][y-i] for i in range(max(-x, y - self.size + 1, -4), min(self.size - x, y + 1, 5))], mark)
+        if row_end or col_end or diag_end or anti_diag_end:
+            return 1, True
+        else:
+            return 0, False
