@@ -10,7 +10,7 @@ def is_end(board, mark):
         row = board[row_index, :]
         if (row == mark).all():
             return 1, True
-    for col_index in range(n_rows):
+    for col_index in range(n_cols):
         col = board[:, col_index]
         if (col == mark).all():
             return 1, True    
