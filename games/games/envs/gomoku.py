@@ -8,9 +8,11 @@ def check(ls, mark):
     for element in ls:
         if element == mark:
             cnt += 1
+            if cnt > 4:
+                return True
         else:
             cnt = 0
-    return cnt > 4
+    return False
 
 
 class GomokuEnv(gym.Env):
@@ -61,8 +63,8 @@ class GomokuEnv(gym.Env):
     
     def is_end(self, mark, move):
         x, y = move
-        row_end = check([self._board[i, y] for i in range(max(0, x - 4), min(self.size, x + 5))], mark)
-        col_end = check([self._board[x, i] for i in range(max(0, y - 4), min(self.size, y + 5))], mark)
+        row_end = check([self._board[x, i] for i in range(max(0, y - 4), min(self.size, y + 5))], mark)
+        col_end = check([self._board[i, y] for i in range(max(0, x - 4), min(self.size, x + 5))], mark)
         diag_end = check([self._board[x+i][y+i] for i in range(max(-x, -y, -4), min(self.size - x, self.size - y, 5))], mark)
         anti_diag_end = check([self._board[x+i][y-i] for i in range(max(-x, y - self.size + 1, -4), min(self.size - x, y + 1, 5))], mark)
         if row_end or col_end or diag_end or anti_diag_end:
