@@ -272,7 +272,7 @@ def batch_update(policy_value_net, queue, batch_size):
     return policy_value_net.update(state, mcts_p, reward)
 
 
-def main(num_epochs=500, num_parallels=16, batch_size=512):
+def main(num_epochs=500, num_parallels=16, batch_size=1024):
     mp.set_start_method('spawn', force=True)
 
     env = gym.make('games/Gomoku', max_episode_steps=169)
