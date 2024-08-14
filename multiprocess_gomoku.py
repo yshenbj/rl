@@ -304,7 +304,7 @@ def main(num_epochs=500, num_parallels=16, batch_size=1024):
             policy_value_net.net.train()
             value_loss,  policy_loss = batch_update(policy_value_net, queue, batch_size)
             epoch += 1
-            if epoch >= 250:
+            if epoch == 250:
                 policy_value_net.lr = 1e-3
             print(f'Epoch: {epoch} | Value loss {value_loss} | Policy Loss {policy_loss}')
             if epoch % 10 == 0:
