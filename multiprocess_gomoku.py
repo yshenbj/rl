@@ -150,7 +150,7 @@ class MCTSPlayer:
             policy_value_net, 
             c_puct_base=5, 
             c_puct_init=0, 
-            num_simulations=500, 
+            num_simulations=1000, 
             noise=True, 
             deterministic=False
         ):
