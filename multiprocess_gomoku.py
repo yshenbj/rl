@@ -45,7 +45,7 @@ class PolicyValueNet:
     def __init__(self):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.net = Net().to(self.device)
-        self.lr = 1e-3
+        self.lr = 1e-2
         self.c = 1e-4
         self.optimizer = optim.Adam(self.net.parameters(), lr=self.lr, weight_decay=self.c)
     
@@ -145,7 +145,15 @@ class AgentNode:
 
 
 class MCTSPlayer:
-    def __init__(self, policy_value_net, c_puct_base=5, c_puct_init=0, num_simulations=1000, noise=False, deterministic=False):
+    def __init__(
+            self, 
+            policy_value_net, 
+            c_puct_base=5, 
+            c_puct_init=0, 
+            num_simulations=500, 
+            noise=True, 
+            deterministic=False
+        ):
         self.policy_value_net = policy_value_net
         self.c_puct_base = c_puct_base
         self.c_puct_init = c_puct_init
@@ -177,11 +185,11 @@ class MCTSPlayer:
         noise = self.rng.dirichlet(alphas)
         node.child_P = node.child_P * (1 - epsilon) + noise * epsilon
         
-    def get_mcts_p(self, child_N, temperature=0.1):
+    def get_mcts_p(self, child_N, temperature):
         child_N = child_N ** (1 / temperature)
         return child_N / sum(child_N)
     
-    def mcts(self, env, observation, info, root_node=None):
+    def mcts(self, env, observation, info, root_node=None, temperature=0.5):
         # Initialize environment and root node.
         action_space = env.unwrapped.action_space
         agent_mark_mapping = env.unwrapped.agent_mark_mapping
@@ -217,7 +225,8 @@ class MCTSPlayer:
             node.back_propagate(value.item())
         
         # Choose best action for root node (deterministic or stochastic).
-        mcts_p = self.get_mcts_p(root_node.child_N)
+        mcts_p = self.get_mcts_p(root_node.child_N, temperature)
+
         if self.deterministic:
             action = np.argmax(mcts_p)
         else:
@@ -295,6 +304,8 @@ def main(num_epochs=500, num_parallels=16, batch_size=1024):
             policy_value_net.net.train()
             value_loss,  policy_loss = batch_update(policy_value_net, queue, batch_size)
             epoch += 1
+            if epoch >= 250:
+                policy_value_net.lr = 1e-3
             print(f'Epoch: {epoch} | Value loss {value_loss} | Policy Loss {policy_loss}')
             if epoch % 10 == 0:
                 policy_value_net.save(f'gomoku_weights/weights_{epoch}.pth')
