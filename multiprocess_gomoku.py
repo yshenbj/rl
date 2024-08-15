@@ -277,7 +277,7 @@ def run(env, policy_value_net, epoch, num_epochs, lock):
             lock.acquire()
             value_loss,  policy_loss = policy_value_net.update(state, action_mask, mcts_p, reward)
             epoch.value += 1
-            if epoch.value > num_epochs // 2:
+            if epoch.value == num_epochs // 2:
                 policy_value_net.lr = 1e-3
             lock.release()
             print(f'Epoch: {epoch.value} | Value loss {value_loss} | Policy Loss {policy_loss}')
@@ -305,7 +305,7 @@ def main(num_epochs=500, num_parallels=16):
     for p in jobs:
         p.join()
 
-    policy_value_net.save('gomoku_weights.pyh')
+    policy_value_net.save('gomoku_weights.pth')
 
 if __name__ == '__main__':
     start_time = time.time()
