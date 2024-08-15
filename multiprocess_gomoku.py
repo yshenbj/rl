@@ -278,7 +278,7 @@ def run(env, policy_value_net, epoch, num_epochs, lock):
             value_loss,  policy_loss = policy_value_net.update(state, action_mask, mcts_p, reward)
             epoch.value += 1
             if epoch.value == num_epochs // 2:
-                policy_value_net.lr = 1e-3
+                policy_value_net.lr = 1e-4
             lock.release()
             print(f'Epoch: {epoch.value} | Value loss {value_loss} | Policy Loss {policy_loss}')
         else:
@@ -288,7 +288,7 @@ def run(env, policy_value_net, epoch, num_epochs, lock):
 def main(num_epochs=500, num_parallels=16):
     mp.set_start_method('spawn', force=True)
     env = gym.make('games/Gomoku', max_episode_steps=169)
-    policy_value_net = PolicyValueNet(lr=1e-2)
+    policy_value_net = PolicyValueNet(lr=1e-3)
     policy_value_net.net.share_memory()
     epoch = mp.Value('i', 0)
     lock = mp.Lock()
