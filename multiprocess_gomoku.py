@@ -270,62 +270,42 @@ def selfplay(env, policy_value_net):
     return np.array(state_list), np.array(action_mask_list), np.array(mcts_p_list), np.array(reward_list)
 
 
-def record(env, policy_value_net, queue, run):
+def run(env, policy_value_net, epoch, num_epochs, lock):
     while True:
-        if run.value:
-            state_list, action_mask_list, mcts_p_list, reward_list = selfplay(env, policy_value_net)
-            for data in zip(state_list, action_mask_list, mcts_p_list, reward_list):
-                queue.put(data)
+        if epoch.value < num_epochs:
+            state, action_mask, mcts_p, reward = selfplay(env, policy_value_net)
+            lock.acquire()
+            value_loss,  policy_loss = policy_value_net.update(state, action_mask, mcts_p, reward)
+            epoch.value += 1
+            if epoch.value > num_epochs // 2:
+                policy_value_net.lr = 1e-3
+            lock.release()
+            print(f'Epoch: {epoch.value} | Value loss {value_loss} | Policy Loss {policy_loss}')
         else:
-            time.sleep(1)
+            return
 
 
-def batch_update(policy_value_net, queue, batch_size):
-    state, action_mask_list, mcts_p, reward = list(zip(*[queue.get() for _ in range(batch_size)]))
-    state, action_mask, mcts_p, reward = np.stack(state), np.stack(action_mask_list), np.stack(mcts_p), np.stack(reward)
-    return policy_value_net.update(state, action_mask, mcts_p, reward)
-
-
-def main(num_epochs=1000, num_parallels=16, batch_size=1024):
+def main(num_epochs=100, num_parallels=16):
     mp.set_start_method('spawn', force=True)
-
     env = gym.make('games/Gomoku', max_episode_steps=169)
-    policy_value_net = PolicyValueNet()
+    policy_value_net = PolicyValueNet(lr=1e-2)
     policy_value_net.net.share_memory()
-    queue = mp.Queue(maxsize=batch_size)
-    run = mp.Value('i', 1)
+    epoch = mp.Value('i', 0)
     lock = mp.Lock()
 
     jobs = []
     for _ in range(num_parallels):
-        p = mp.Process(target=record, args=(env, policy_value_net, queue, run))
+        p = mp.Process(target=run, args=(env, policy_value_net, epoch, num_epochs, lock))
         p.start()
         jobs.append(p)
-    epoch = 0
-    while epoch < num_epochs:
-        if queue.full():
-            if run.value:
-                run.value = 0
-            print('Updating...')
-            lock.acquire()
-            policy_value_net.net.train()
-            value_loss,  policy_loss = batch_update(policy_value_net, queue, batch_size)
-            lock.release()
-            epoch += 1
-            if epoch == 250:
-                policy_value_net.lr = 1e-3
-            print(f'Epoch: {epoch} | Value loss {value_loss} | Policy Loss {policy_loss}')
-            if epoch % 100 == 0:
-                policy_value_net.save(f'gomoku_weights/weights_{epoch}.pth')
-            print('Simulating...')
-            policy_value_net.net.eval()
-        else:
-            if not run.value:
-                run.value = 1
-            time.sleep(1)
-    for p in jobs:
-        p.terminate()
 
+    while epoch.value < num_epochs:
+        time.sleep(1) 
+
+    for p in jobs:
+        p.join()
+
+    policy_value_net.save('gomoku_weights.pyh')
 
 if __name__ == '__main__':
     start_time = time.time()
