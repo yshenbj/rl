@@ -1,10 +1,8 @@
 import copy
 import time
 
-
 import numpy as np
 import gymnasium as gym
-
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -35,34 +33,37 @@ class Net(nn.Module):
         x = F.relu(self.conv3(x))
         x_act = F.relu(self.act_conv1(x))
         x_act = x_act.view(-1, 4 * self.size * self.size)
-        x_act = F.softmax(self.act_fc1(x_act), dim=-1)
+        x_act = self.act_fc1(x_act)
         x_val = F.relu(self.val_conv1(x))
         x_val = x_val.view(-1, 4 * self.size * self.size)
         x_val = self.val_fc1(x_val)
         return x_act, x_val
     
 class PolicyValueNet:
-    def __init__(self):
+    def __init__(self, lr=1e-3, c=1e-4):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.net = Net().to(self.device)
-        self.lr = 1e-2
-        self.c = 1e-4
+        self.lr = lr
+        self.c = c
         self.optimizer = optim.Adam(self.net.parameters(), lr=self.lr, weight_decay=self.c)
     
-    def policy_value(self, state):
+    def policy_value(self, state, action_mask):
         state = torch.as_tensor(state, dtype=torch.float32, device=self.device)
+        action_mask =  torch.as_tensor(action_mask, dtype=torch.bool, device=self.device)
         with torch.no_grad():
-            action_p, value = self.net(state)
-        action_p = action_p.cpu().numpy()
+            logits, value = self.net(state)
+        action_p = F.softmax(logits.squeeze().masked_fill(action_mask, 0), -1).cpu().numpy()
         value = value.cpu().numpy()
         return action_p, value
     
-    def update(self, state, mcts_p, reward):
+    def update(self, state, action_mask, mcts_p, reward):
         state = torch.tensor(state, dtype=torch.float32, device=self.device)
+        action_mask =  torch.as_tensor(action_mask, dtype=torch.bool, device=self.device)
         mcts_p = torch.tensor(mcts_p, dtype=torch.float32, device=self.device)
         reward = torch.tensor(reward, dtype=torch.float32, device=self.device)
         self.optimizer.zero_grad()
-        action_p, value = self.net(state)
+        logits, value = self.net(state)
+        action_p = F.softmax(logits.masked_fill(action_mask, 0), -1)
         # cross entorpy loss for the search probabilities 
         policy_loss = torch.mean(torch.sum(mcts_p * torch.log(action_p), -1))
         # mse loss for the state value
@@ -148,8 +149,8 @@ class MCTSPlayer:
     def __init__(
             self, 
             policy_value_net, 
-            c_puct_base=5, 
-            c_puct_init=0, 
+            c_puct_base=100, 
+            c_puct_init=1, 
             num_simulations=1000, 
             noise=True, 
             deterministic=False
@@ -167,7 +168,7 @@ class MCTSPlayer:
         Transfer environmental observation and information to a state tensor as neural network input.
         Board observation will transfer to an N * N * M image stack, each plane represent the board positions 
         oriented to a certain player (N * N with dummy), current player's plane is on the top.
-        state: numpy array with shape (2, 13, 13)
+        state: numpy array with shape (2, 3, 3)
         """
         agent_index = info['agent_index']
         mark_list = list(agent_mark_mapping.values())
@@ -178,26 +179,27 @@ class MCTSPlayer:
             mark = mark_list[index]
             array_list.append(observation == mark)
         state = np.stack(array_list, dtype=np.float32)
-        return state
+        action_mask = np.equal(observation.flatten(), 0)
+        return state, action_mask
     
-    def add_dirchleet_noise(self, node, action_space, epsilon=0.25, alpha=0.03):
-        alphas = np.ones(action_space.n) * alpha
+    def add_dirchleet_noise(self, node, action_mask, epsilon=0.25, alpha=0.03):
+        alphas = action_mask * alpha
         noise = self.rng.dirichlet(alphas)
         node.child_P = node.child_P * (1 - epsilon) + noise * epsilon
         
-    def get_mcts_p(self, child_N, temperature):
+    def get_mcts_p(self, child_N, temperature=1):
         child_N = child_N ** (1 / temperature)
         return child_N / sum(child_N)
     
-    def mcts(self, env, observation, info, root_node=None, temperature=0.5):
+    def mcts(self, env, observation, info, root_node=None):
         # Initialize environment and root node.
-        action_space = env.unwrapped.action_space
+        num_actions = env.unwrapped.action_space.n
         agent_mark_mapping = env.unwrapped.agent_mark_mapping
-        root_state = self.to_state(observation, info, agent_mark_mapping)
-        prior_p, value = self.policy_value_net.policy_value(root_state)
+        root_state, root_action_mask = self.to_state(observation, info, agent_mark_mapping)
+        prior_p, value = self.policy_value_net.policy_value(root_state, root_action_mask)
         if not root_node:
-            root_node = AgentNode(None, None, action_space.n, 1)
-        root_node.expand(info['agent_index'], prior_p[0])
+            root_node = AgentNode(None, None, num_actions, 1)
+        root_node.expand(info['agent_index'], prior_p)
         root_node.back_propagate(value.item())
         
         # Start mcts simulation.
@@ -206,7 +208,7 @@ class MCTSPlayer:
             node = root_node
             # Add dirchleet noise.
             if self.noise:
-                self.add_dirchleet_noise(node, action_space)
+                self.add_dirchleet_noise(node, root_action_mask)
                 
             while node.is_expanded:
                 # SELECT
@@ -217,20 +219,19 @@ class MCTSPlayer:
                     # BACK PROPAGATE (REWARD)
                     node.back_propagate(-reward)
             # EVALUATE
-            state = self.to_state(observation, info, agent_mark_mapping)
-            prior_p, value = self.policy_value_net.policy_value(state)
+            state, action_mask = self.to_state(observation, info, agent_mark_mapping)
+            prior_p, value = self.policy_value_net.policy_value(state, action_mask)
             # EXPAND
-            node.expand(info['agent_index'], prior_p[0])
+            node.expand(info['agent_index'], prior_p)
             # BACK PROPAGATE (VALUE)
             node.back_propagate(value.item())
         
         # Choose best action for root node (deterministic or stochastic).
-        mcts_p = self.get_mcts_p(root_node.child_N, temperature)
-
+        mcts_p = self.get_mcts_p(root_node.child_N)
         if self.deterministic:
             action = np.argmax(mcts_p)
         else:
-            action = self.rng.choice(np.arange(action_space.n), p=mcts_p)
+            action = self.rng.choice(np.arange(num_actions), p=mcts_p)
         
         if action in root_node.children.keys():
             next_root_node = root_node.children[action]
@@ -238,12 +239,13 @@ class MCTSPlayer:
         else:
             next_root_node = None
         
-        return root_state, action, mcts_p, next_root_node
+        return root_state, root_action_mask, action, mcts_p, next_root_node
 
 
 def selfplay(env, policy_value_net):
     agent_index_list = []
     state_list = []
+    action_mask_list = []
     mcts_p_list = []
     
     
@@ -254,8 +256,9 @@ def selfplay(env, policy_value_net):
     
     while not is_end:
         agent_index_list.append(info['agent_index'])
-        root_state, action, mcts_p, root_node = player.mcts(env, observation, info, root_node)
+        root_state, root_action_mask, action, mcts_p, root_node = player.mcts(env, observation, info, root_node)
         state_list.append(root_state)
+        action_mask_list.append(root_action_mask)
         mcts_p_list.append(mcts_p)
         observation, reward, terminated, truncated, info = env.step(action)
         is_end = terminated or truncated
@@ -264,24 +267,26 @@ def selfplay(env, policy_value_net):
         reward if index == agent_index_list[-1] else -reward for index in agent_index_list
     ]
     
-    return state_list, mcts_p_list, reward_list
+    return np.array(state_list), np.array(action_mask_list), np.array(mcts_p_list), np.array(reward_list)
 
 
 def record(env, policy_value_net, queue, run):
     while True:
         if run.value:
-            state_list, mcts_p_list, reward_list = selfplay(env, policy_value_net)
-            for data in zip(state_list, mcts_p_list, reward_list):
+            state_list, action_mask_list, mcts_p_list, reward_list = selfplay(env, policy_value_net)
+            for data in zip(state_list, action_mask_list, mcts_p_list, reward_list):
                 queue.put(data)
+        else:
+            time.sleep(1)
 
 
 def batch_update(policy_value_net, queue, batch_size):
-    state, mcts_p, reward = list(zip(*[queue.get() for _ in range(batch_size)]))
-    state, mcts_p, reward = np.stack(state), np.stack(mcts_p), np.stack(reward)
-    return policy_value_net.update(state, mcts_p, reward)
+    state, action_mask_list, mcts_p, reward = list(zip(*[queue.get() for _ in range(batch_size)]))
+    state, action_mask, mcts_p, reward = np.stack(state), np.stack(action_mask_list), np.stack(mcts_p), np.stack(reward)
+    return policy_value_net.update(state, action_mask, mcts_p, reward)
 
 
-def main(num_epochs=500, num_parallels=16, batch_size=1024):
+def main(num_epochs=500, num_parallels=10, batch_size=1024):
     mp.set_start_method('spawn', force=True)
 
     env = gym.make('games/Gomoku', max_episode_steps=169)
@@ -289,6 +294,7 @@ def main(num_epochs=500, num_parallels=16, batch_size=1024):
     policy_value_net.net.share_memory()
     queue = mp.Queue(maxsize=batch_size)
     run = mp.Value('i', 1)
+    lock = mp.Lock()
 
     jobs = []
     for _ in range(num_parallels):
@@ -301,8 +307,10 @@ def main(num_epochs=500, num_parallels=16, batch_size=1024):
             if run.value:
                 run.value = 0
             print('Updating...')
+            lock.acquire()
             policy_value_net.net.train()
             value_loss,  policy_loss = batch_update(policy_value_net, queue, batch_size)
+            lock.release()
             epoch += 1
             if epoch == 250:
                 policy_value_net.lr = 1e-3
