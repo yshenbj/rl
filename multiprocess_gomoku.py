@@ -315,7 +315,7 @@ def main(num_epochs=1000, num_parallels=16, batch_size=1024):
             if epoch == 250:
                 policy_value_net.lr = 1e-3
             print(f'Epoch: {epoch} | Value loss {value_loss} | Policy Loss {policy_loss}')
-            if epoch % 10 == 0:
+            if epoch % 100 == 0:
                 policy_value_net.save(f'gomoku_weights/weights_{epoch}.pth')
             print('Simulating...')
             policy_value_net.net.eval()
