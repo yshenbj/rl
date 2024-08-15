@@ -144,7 +144,7 @@ class AgentNode:
 
 
 class MCTSPlayer:
-    def __init__(self, policy_value_net, c_puct_base=5, c_puct_init=0, num_simulations=1000, noise=False, deterministic=False):
+    def __init__(self, policy_value_net, c_puct_base=1000, c_puct_init=5, num_simulations=1000, noise=False, deterministic=False):
         self.policy_value_net = policy_value_net
         self.c_puct_base = c_puct_base
         self.c_puct_init = c_puct_init
