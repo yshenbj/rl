@@ -294,7 +294,7 @@ def run(env, policy_value_net, epoch, num_epochs, lock):
                 policy_value_net.save(f'gomoku_weights/epoch_{epoch.value}.pth')
 
             lock.release()
-            print(f'Epoch: {epoch.value} | Policy Loss {policy_loss} | Value loss {value_loss}')
+            print(f'Epoch: {epoch.value} | Policy loss {policy_loss} | Value loss {value_loss}')
         else:
             return
 
