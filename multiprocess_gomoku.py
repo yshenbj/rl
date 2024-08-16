@@ -110,7 +110,7 @@ class AgentNode:
         Q = self.child_W / np.where(self.child_N > 0, self.child_N, 1)
         U = c_puct * self.child_P * np.sqrt(self.N) / (1 + self.child_N)
         UCB = U - Q
-        action = np.where(UCB, action_mask, float('-inf')).argmax()
+        action = np.where(action_mask, UCB, float('-inf')).argmax()
     
         if action not in self.children.keys():
             self.children[action] = AgentNode(
@@ -206,14 +206,15 @@ class MCTSPlayer:
         root_node.expand(info['agent_index'], prior_p)
         root_node.back_propagate(value)
         
+        # Add dirchleet noise.
+        if self.noise:
+            self.add_dirchleet_noise(root_node, root_action_mask)
+
         # Start mcts simulation.
         while root_node.N < self.num_simulations:
             sim_env = copy.deepcopy(env)
             node = root_node
             action_mask = root_action_mask
-            # Add dirchleet noise.
-            if self.noise:
-                self.add_dirchleet_noise(node, action_mask)
             
             done = False
             while not done:
@@ -299,7 +300,7 @@ def run(env, policy_value_net, epoch, num_epochs, lock):
             return
 
 
-def main(num_epochs=1000, num_parallels=16):
+def main(num_epochs=1000, num_parallels=12):
     mp.set_start_method('spawn', force=True)
     env = gym.make('games/Gomoku', max_episode_steps=169)
     policy_value_net = PolicyValueNet(lr=1e-3)
