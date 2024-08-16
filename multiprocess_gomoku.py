@@ -316,7 +316,7 @@ def run(env, policy_value_net, epoch, num_epochs, lock):
             if epoch.value == num_epochs // 2:
                 policy_value_net.lr = 1e-4
 
-            if epoch.value % 100 == 0:
+            if epoch.value % 500 == 0:
                 policy_value_net.save(f'gomoku_weights/epoch_{epoch.value}.pth')
 
             lock.release()
