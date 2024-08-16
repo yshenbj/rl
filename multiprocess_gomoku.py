@@ -279,13 +279,13 @@ def selfplay(env, policy_value_net, argumentation=True):
     
     if argumentation:
         state_list = state_list \
-            + [np.stack([np.fliplr(state[0])]) for state in state_list] \
-            + [np.flipud(state) for state in state_list] \
-            + [np.rot90(state, 1) for state in state_list] \
-            + [np.rot90(state, 2) for state in state_list] \
-            + [np.rot90(state, 3) for state in state_list] \
-            + [np.transpose(state) for state in state_list] \
-            + [np.transpose(state[::-1, ::-1]) for state in state_list]
+            + [np.stack([np.fliplr(state[0]), np.fliplr(state[1])]) for state in state_list] \
+            + [np.stack([np.flipud(state[0]), np.flipud(state[0])]) for state in state_list] \
+            + [np.stack([np.rot90(state[0], 1), np.rot90(state[0], 1)]) for state in state_list] \
+            + [np.stack([np.rot90(state[0], 2), np.rot90(state[0], 2)]) for state in state_list] \
+            + [np.stack([np.rot90(state[0], 3), np.rot90(state[0], 3)]) for state in state_list] \
+            + [np.stack([np.transpose(state[0]), np.transpose(state[0])]) for state in state_list] \
+            + [np.stack([np.transpose(state[0, ::-1, ::-1]), np.transpose(state[0, ::-1, ::-1])]) for state in state_list]
 
         mcts_p_list = mcts_p_list \
             + [np.fliplr(np.reshape(mcts_p, (13, 13))).flatten() for mcts_p in mcts_p_list] \
