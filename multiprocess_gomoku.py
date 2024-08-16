@@ -22,10 +22,12 @@ class Net(nn.Module):
         self.conv3 = nn.Conv2d(64, 128, kernel_size=3, padding=1)
         # action policy layers
         self.act_conv1 = nn.Conv2d(128, 4, kernel_size=1)
-        self.act_fc1 = nn.Linear(4 * size * size, size * size)
+        self.act_fc1 = nn.Linear(4 * size * size, 2 * size * size)
+        self.act_fc2 = nn.Linear(2 * size * size, size * size)
         # state value layers
         self.val_conv1 = nn.Conv2d(128, 4, kernel_size=1)
-        self.val_fc1 = nn.Linear(4 * size * size, 1)
+        self.val_fc1 = nn.Linear(4 * size * size, 2 * size * size)
+        self.val_fc2 = nn.Linear(2 * size * size, 1)
     
     def forward(self, x):
         x = F.relu(self.conv1(x))
@@ -33,12 +35,14 @@ class Net(nn.Module):
         x = F.relu(self.conv3(x))
         x_act = F.relu(self.act_conv1(x))
         x_act = x_act.view(-1, 4 * self.size * self.size)
-        x_act = self.act_fc1(x_act)
+        x_act = F.relu(self.act_fc1(x_act))
+        x_act = self.act_fc2(x_act)
         x_act = F.tanh(x_act)
         x_act = F.softmax(x_act, -1)
         x_val = F.relu(self.val_conv1(x))
         x_val = x_val.view(-1, 4 * self.size * self.size)
-        x_val = self.val_fc1(x_val)
+        x_val = F.relu(self.val_fc1(x_val))
+        x_val = self.val_fc2(x_val)
 
         return x_act, x_val
     
@@ -251,7 +255,7 @@ class MCTSPlayer:
         return root_state, action, mcts_p, next_root_node
 
 
-def selfplay(env, policy_value_net):
+def selfplay(env, policy_value_net, argumentation=True):
     agent_index_list = []
     state_list = []
     mcts_p_list = []
@@ -273,6 +277,27 @@ def selfplay(env, policy_value_net):
         reward if index == agent_index_list[-1] else -reward for index in agent_index_list
     ]
     
+    if argumentation:
+        state_list = state_list \
+            + [np.stack([np.fliplr(state[0])]) for state in state_list] \
+            + [np.flipud(state) for state in state_list] \
+            + [np.rot90(state, 1) for state in state_list] \
+            + [np.rot90(state, 2) for state in state_list] \
+            + [np.rot90(state, 3) for state in state_list] \
+            + [np.transpose(state) for state in state_list] \
+            + [np.transpose(state[::-1, ::-1]) for state in state_list]
+
+        mcts_p_list = mcts_p_list \
+            + [np.fliplr(np.reshape(mcts_p, (13, 13))).flatten() for mcts_p in mcts_p_list] \
+            + [np.flipud(np.reshape(mcts_p, (13, 13))).flatten() for mcts_p in mcts_p_list] \
+            + [np.rot90(np.reshape(mcts_p, (13, 13)), 1).flatten() for mcts_p in mcts_p_list] \
+            + [np.rot90(np.reshape(mcts_p, (13, 13)), 2).flatten() for mcts_p in mcts_p_list] \
+            + [np.rot90(np.reshape(mcts_p, (13, 13)), 3).flatten() for mcts_p in mcts_p_list] \
+            + [np.transpose(np.reshape(mcts_p, (13, 13))).flatten() for mcts_p in mcts_p_list] \
+            + [np.transpose(np.reshape(mcts_p, (13, 13))[::-1, ::-1]).flatten() for mcts_p in mcts_p_list]
+        
+        reward_list = reward_list * 8
+
     return np.array(state_list), np.array(mcts_p_list), np.array(reward_list)
 
 
@@ -300,7 +325,7 @@ def run(env, policy_value_net, epoch, num_epochs, lock):
             return
 
 
-def main(num_epochs=1000, num_parallels=12):
+def main(num_epochs=2000, num_parallels=12):
     mp.set_start_method('spawn', force=True)
     env = gym.make('games/Gomoku', max_episode_steps=169)
     policy_value_net = PolicyValueNet(lr=1e-3)
