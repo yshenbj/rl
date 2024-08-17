@@ -43,6 +43,7 @@ class Net(nn.Module):
         x_val = x_val.view(-1, 4 * self.size * self.size)
         x_val = F.relu(self.val_fc1(x_val))
         x_val = self.val_fc2(x_val)
+        x_val = F.tanh(x_val)
 
         return x_act, x_val
     
