@@ -108,7 +108,7 @@ class AgentNode:
         self.child_P = None
         self.agent_index = None
         self.is_expanded = False
-
+    
     def select(self, c_puct_base, c_puct_init, action_mask):
         c_puct = np.log((1 + self.N + c_puct_base) / c_puct_base) + c_puct_init
         Q = self.child_W / np.where(self.child_N > 0, self.child_N, 1)
@@ -221,23 +221,26 @@ class MCTSPlayer:
             action_mask = root_action_mask
             
             done = False
-            while not done:
-                if node.is_expanded:
-                    # SELECT
-                    action, node = node.select(self.c_puct_base, self.c_puct_init, action_mask)
-                    # INTERACT
-                    observation, reward, terminated, truncated, info = sim_env.step(action)
-                    done = terminated or truncated              
-                else:
-                    # EVALUATE
-                    state, action_mask = self.to_state(observation, info, agent_mark_mapping)                    
-                    prior_p, value = self.policy_value_net.policy_value(state)
-                    # EXPAND
-                    node.expand(info['agent_index'], prior_p)
-                    # BACK PROPAGATE (VALUE)
-                    node.back_propagate(value)
-            # BACK PROPAGATE (REWARD)
-            node.back_propagate(-reward)
+            while node.is_expanded:
+                # SELECT
+                action, node = node.select(self.c_puct_base, self.c_puct_init, action_mask)
+                # INTERACT
+                observation, reward, terminated, truncated, info = sim_env.step(action)
+                done = terminated or truncated
+                if done:                  
+                    break
+            
+            if done:
+                # BACK PROPAGATE (REWARD)
+                node.back_propagate(-reward)
+            else:
+                # EVALUATE
+                state, action_mask = self.to_state(observation, info, agent_mark_mapping)                    
+                prior_p, value = self.policy_value_net.policy_value(state)
+                # EXPAND
+                node.expand(info['agent_index'], prior_p)
+                # BACK PROPAGATE (VALUE)
+                node.back_propagate(value)
         
         # Choose best action for root node (deterministic or stochastic).
         mcts_p = self.get_mcts_p(root_node.child_N)
