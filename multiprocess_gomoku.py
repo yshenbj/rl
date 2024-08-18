@@ -186,9 +186,8 @@ class MCTSPlayer:
             array_list.append(observation == mark)
             
         state = np.stack(array_list, dtype=np.float32)
-        action_mask = np.equal(observation.flatten(), 0)
-
-        return state, action_mask
+        
+        return state
     
     def add_dirchleet_noise(self, node, action_mask, epsilon=0.25, alpha=0.03):
         alphas = action_mask * alpha
@@ -203,7 +202,8 @@ class MCTSPlayer:
         # Initialize environment and root node.
         num_actions = env.unwrapped.action_space.n
         agent_mark_mapping = env.unwrapped.agent_mark_mapping
-        root_state, root_action_mask = self.to_state(observation, info, agent_mark_mapping)
+        root_state = self.to_state(observation, info, agent_mark_mapping)
+        root_action_mask = np.equal(observation.flatten(), 0)
         prior_p, value = self.policy_value_net.policy_value(root_state)
 
         if not root_node:
@@ -227,6 +227,7 @@ class MCTSPlayer:
                 action, node = node.select(self.c_puct_base, self.c_puct_init, action_mask)
                 # INTERACT
                 observation, reward, terminated, truncated, info = sim_env.step(action)
+                action_mask = np.equal(observation.flatten(), 0)
                 done = terminated or truncated
                 if done:                  
                     break
@@ -236,7 +237,7 @@ class MCTSPlayer:
                 node.back_propagate(-reward)
             else:
                 # EVALUATE
-                state, action_mask = self.to_state(observation, info, agent_mark_mapping)                    
+                state = self.to_state(observation, info, agent_mark_mapping)                    
                 prior_p, value = self.policy_value_net.policy_value(state)
                 # EXPAND
                 node.expand(info['agent_index'], prior_p)
@@ -255,7 +256,7 @@ class MCTSPlayer:
             next_root_node.as_root()
         else:
             next_root_node = None
-        
+        print(root_action_mask)
         return root_state, action, mcts_p, next_root_node
 
 
