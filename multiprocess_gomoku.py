@@ -256,7 +256,7 @@ class MCTSPlayer:
             next_root_node.as_root()
         else:
             next_root_node = None
-        print(root_action_mask)
+
         return root_state, action, mcts_p, next_root_node
 
 
