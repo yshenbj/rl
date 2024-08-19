@@ -18,9 +18,9 @@ class Net(nn.Module):
         super().__init__()
         self.size = size
         # common layers
-        self.conv1 = nn.Conv2d(2, 32, kernel_size=3, padding=1)
-        self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
-        self.conv3 = nn.Conv2d(64, 128, kernel_size=3, padding=1)
+        self.conv1 = nn.Conv2d(2, 128, kernel_size=3, padding=1)
+        self.conv2 = nn.Conv2d(128, 128, kernel_size=3, padding=1)
+        self.conv3 = nn.Conv2d(128, 128, kernel_size=3, padding=1)
         # action policy layers
         self.act_conv1 = nn.Conv2d(128, 4, kernel_size=1)
         self.act_fc1 = nn.Linear(4 * size * size, 2 * size * size)
@@ -331,7 +331,7 @@ def run(env, policy_value_net, epoch, num_epochs, lock):
             return
 
 
-def main(num_epochs=20000, num_parallels=14):
+def main(num_epochs=20000, num_parallels=12):
     mp.set_start_method('spawn', force=True)
     env = gym.make('games/Gomoku', max_episode_steps=169)
     policy_value_net = PolicyValueNet(lr=1e-3)
