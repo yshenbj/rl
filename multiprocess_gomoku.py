@@ -331,7 +331,7 @@ def run(env, policy_value_net, epoch, num_epochs, lock):
             return
 
 
-def main(num_epochs=20000, num_parallels=12):
+def main(num_epochs=20000, num_parallels=15):
     mp.set_start_method('spawn', force=True)
     env = gym.make('games/Gomoku', max_episode_steps=169)
     policy_value_net = PolicyValueNet(lr=1e-3)
@@ -349,6 +349,7 @@ def main(num_epochs=20000, num_parallels=12):
     tmp_epoch = epoch.value
     while epoch.value < num_epochs:
         progress_bar.update(epoch.value - tmp_epoch)
+        tmp_epoch = epoch.value
         time.sleep(1) 
 
     for p in jobs:
