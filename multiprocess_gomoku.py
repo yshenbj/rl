@@ -8,6 +8,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 import torch.multiprocessing as mp
+import tqdm
 
 import games
 
@@ -325,7 +326,7 @@ def run(env, policy_value_net, epoch, num_epochs, lock):
                 policy_value_net.save(f'gomoku_weights/epoch_{epoch.value}.pth')
 
             lock.release()
-            print(f'Epoch: {epoch.value} | Policy loss {policy_loss} | Value loss {value_loss}')
+            # print(f'Epoch: {epoch.value} | Policy loss {policy_loss} | Value loss {value_loss}')
         else:
             return
 
@@ -337,6 +338,7 @@ def main(num_epochs=20000, num_parallels=14):
     policy_value_net.net.share_memory()
     epoch = mp.Value('i', 0)
     lock = mp.Lock()
+    progress_bar = tqdm(total=num_epochs)
 
     jobs = []
     for _ in range(num_parallels):
@@ -344,7 +346,9 @@ def main(num_epochs=20000, num_parallels=14):
         p.start()
         jobs.append(p)
 
+    tmp_epoch = epoch.value
     while epoch.value < num_epochs:
+        progress_bar.update(epoch.value - tmp_epoch)
         time.sleep(1) 
 
     for p in jobs:
