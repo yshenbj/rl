@@ -279,7 +279,7 @@ def batch_update(policy_value_net, queue, batch_size):
     return policy_value_net.update(state, mcts_p, reward)
 
 
-def main(num_epochs=50, num_parallels=16, batch_size=256):
+def main(num_epochs=50, num_parallels=12, batch_size=256):
     mp.set_start_method('spawn', force=True)
 
     env = gym.make('games/TicTacToe', max_episode_steps=9)
