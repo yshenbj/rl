@@ -322,7 +322,7 @@ def run(env, policy_value_net, epoch, num_epochs, lock):
             if epoch.value == num_epochs // 2:
                 policy_value_net.lr = 1e-4
 
-            if epoch.value % 500 == 0:
+            if epoch.value % 1000 == 0:
                 policy_value_net.save(f'gomoku_weights/epoch_{epoch.value}.pth')
 
             lock.release()
@@ -331,7 +331,7 @@ def run(env, policy_value_net, epoch, num_epochs, lock):
             return
 
 
-def main(num_epochs=20000, num_parallels=12):
+def main(num_epochs=40000, num_parallels=12):
     mp.set_start_method('spawn', force=True)
     env = gym.make('games/Gomoku', max_episode_steps=169)
     policy_value_net = PolicyValueNet(lr=1e-3)
