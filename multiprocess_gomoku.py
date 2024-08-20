@@ -18,9 +18,9 @@ class Net(nn.Module):
         super().__init__()
         self.size = size
         # common layers
-        self.conv1 = nn.Conv2d(2, 128, kernel_size=3, padding=1)
-        self.conv2 = nn.Conv2d(128, 128, kernel_size=3, padding=1)
-        self.conv3 = nn.Conv2d(128, 128, kernel_size=3, padding=1)
+        self.conv1 = nn.Conv2d(2, 128, kernel_size=5, padding=2)
+        self.conv2 = nn.Conv2d(128, 128, kernel_size=5, padding=2)
+        self.conv3 = nn.Conv2d(128, 128, kernel_size=5, padding=2)
         # action policy layers
         self.act_conv1 = nn.Conv2d(128, 4, kernel_size=1)
         self.act_fc1 = nn.Linear(4 * size * size, 2 * size * size)
